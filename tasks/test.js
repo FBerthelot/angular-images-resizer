@@ -6,6 +6,7 @@
 module.exports = function (grunt) {
     grunt.registerTask('test', [
         'jshint:all',
-        'karma:unit'
+        'karma:unit',
+        'coveralls:target'
     ]);
 };

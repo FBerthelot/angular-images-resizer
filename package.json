@@ -5,22 +5,23 @@
   "author": "FBerthelot",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^1.9.2",
     "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-copy": "^0.7.0",
-    "time-grunt": "^1.0.0",
-    "load-grunt-tasks": "^1.0.0",
+    "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-uglify": "^0.6.0",
-    "mocha": "^2.0.1",
+    "grunt-coveralls": "^1.0.0",
+    "grunt-karma": "^0.9.0",
     "karma": "^0.12.24",
+    "karma-chai": "^0.1.0",
+    "karma-coverage": "^0.2.6",
     "karma-mocha": "^0.1.9",
     "karma-phantomjs-launcher": "^0.1.4",
-    "grunt-karma": "^0.9.0",
-    "chai": "^1.9.2",
-    "karma-chai": "^0.1.0",
-    "sinon": "^1.11.1",
     "karma-sinon": "^1.0.3",
-    "karma-coverage": "^0.2.6"
+    "load-grunt-tasks": "^1.0.0",
+    "mocha": "^2.0.1",
+    "sinon": "^1.11.1",
+    "time-grunt": "^1.0.0"
   }
 }

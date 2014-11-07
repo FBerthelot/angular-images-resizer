@@ -7,11 +7,12 @@ module.exports = function (grunt) {
     grunt.config.merge({
         coveralls: {
             options: {
-                src: 'test/results/results.info',
+                src: 'test/results/ouh.info',
                 force: false
             },
-            'your_target': {
-                src: 'test/results/extra-results-*.info'
+            target: {
+                // Target-specific LCOV coverage file
+                src: 'test/**/*.info'
             }
         }
     });

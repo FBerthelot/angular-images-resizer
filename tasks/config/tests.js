@@ -5,8 +5,12 @@
 
 module.exports = function (grunt) {
     grunt.config.merge({
-        'mocha_phantomjs': {
-            all: ['test/**/*.html']
+        karma: {
+            unit: {
+                configFile: './test/karma.conf.js',
+                autoWatch: false,
+                singleRun: true
+            }
         }
     });
 };

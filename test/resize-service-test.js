@@ -3,6 +3,10 @@
  */
 'use strict';
 
+window.mocha.setup({
+    timeout: 5000
+});
+
 describe('[resize] resize-service', function() {
     var service;
     beforeEach(module('resize'));

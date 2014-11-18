@@ -36,6 +36,11 @@ angular.module('resize')
             return deferred.promise;
         };
 
+        /**
+         * Decode Error of a file reader
+         * @param event
+         * @returns {*}
+         */
         function eventErrorDecoder (event) {
             var errorMessage = null;
 

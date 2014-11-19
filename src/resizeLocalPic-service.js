@@ -19,8 +19,11 @@ angular.module('resize')
                 deferred.reject('No file selected');
             }
             else {
-                var reader = new FileReader();
+                if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
+                    deferred.reject('Your browser do not support reading file');
+                }
 
+                var reader = new FileReader();
                 reader.onload = function (e) {
                     deferred.resolve(e.target.result);
                 };
@@ -30,6 +33,7 @@ angular.module('resize')
                 reader.onerror = function(e) {
                     deferred.reject('Fail to convert file in base64img, error: '+ eventErrorDecoder(e));
                 };
+
                 reader.readAsDataURL(input.files[0]);
             }
 

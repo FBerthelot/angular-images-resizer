@@ -27,10 +27,14 @@ module.exports = function(config) {
         '../src/resize.js',
         '../src/*.js',
 
+        //Ressources for testing (fixtures)
+        {pattern: 'fixture/*', watched: false, included: false, served: true},
         //Test-Specific Code
         '*.js'
     ],
-
+    proxies: {
+            '/fixture/': '/opt/Projects/angular-images-resizer/test/fixture/'
+    },
 
     // list of files to exclude
     exclude: [
@@ -76,7 +80,6 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['PhantomJS'],
-
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

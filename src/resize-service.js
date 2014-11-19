@@ -32,10 +32,10 @@ angular.module('resize')
         this.startResize = function (src, cb) {
             _this.createImage(src).then(
                 function(img) {
-                    cb({err: null, data: _this.resize(img)});
+                    cb(null, _this.resize(img));
                 },
                 function(err) {
-                    cb({err: err, data: null});
+                    cb(err, null);
                 }
             );
         };

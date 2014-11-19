@@ -33,7 +33,8 @@ module.exports = function(config) {
         '*.js'
     ],
     proxies: {
-            '/fixture/': '/opt/Projects/angular-images-resizer/test/fixture/'
+            '/fixture/img.jpg': 'https://raw.githubusercontent.com/FBerthelot/angular-images-resizer/master/test/fixture/img.jpg',
+            '/fixture/img.png': 'https://raw.githubusercontent.com/FBerthelot/angular-images-resizer/master/test/fixture/img.png'
     },
 
     // list of files to exclude

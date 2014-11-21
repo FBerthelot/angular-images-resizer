@@ -6,6 +6,8 @@ Angular-image-resizer
 
 This is a simple angular service which resizes images client-side. With this component, you will liberate some ressources on your server! Let your client work for you, and save bandwidth. If you don't care about supporting every browsers then this component is for you.
 
+You can test this module on this site exemple: http://fberthelot.github.io/angular-images-resizer/
+
 ##Get started
 Add this module to your project with bower:
 ```javascript 

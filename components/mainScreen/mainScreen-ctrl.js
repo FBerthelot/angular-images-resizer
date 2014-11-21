@@ -4,7 +4,7 @@
 'use strict';
 
 angular.module('mainScreen')
-    .controller('firstScreenCtrl', ['$scope', '$document', 'resizeService',
+    .controller('mainScreenCtrl', ['$scope', '$document', 'resizeService',
         function($scope, $document, resizeService ) {
             $document[0].title = 'Angular-images-resizer demonstration';
 

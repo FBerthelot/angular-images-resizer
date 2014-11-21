@@ -4,6 +4,7 @@
     <file url="file://$PROJECT_DIR$/.editorconfig" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/.gitignore" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/bower.json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/components/mainScreen/mainScreen-ctrl.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/index.html" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/styles/main.css" charset="UTF-8" />
   </component>

@@ -1,6 +1,6 @@
 {
   "name": "angular-images-resizer",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "dependencies": {
     "angular": "^1.3.0",
     "json3": "^3.3.0",
@@ -13,5 +13,6 @@
     "angular-sanitize": "^1.3.0",
     "angular-touch": "^1.3.0",
     "angular-images-resizer": "*"
-  }
+  },
+  "private": true
 }

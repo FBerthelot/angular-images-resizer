@@ -3,4 +3,4 @@
  */
 'use strict';
 
-angular.module('resize', []);
+angular.module('images-resizer', []);

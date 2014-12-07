@@ -3,34 +3,20 @@
  */
 'use strict';
 
-describe('[resize] resize-service', function() {
+describe('[images-resizer] resize-service', function() {
     var service, rootScope;
 
-    beforeEach(module('resize'));
+    beforeEach(module('images-resizer'));
     beforeEach(inject(function($injector, $rootScope) {
         service = $injector.get('resizeService');
         rootScope = $rootScope;
     }));
 
-    describe('halfSize', function() {
-        it('should return canvas half sized', function() {
-            var canvas = document.createElement('canvas');
-            canvas.width = 1000;
-            canvas.height = 1000;
-            canvas = service.halfSize(canvas);
-            expect(canvas.width).to.equal(500);
-            expect(canvas.width).to.equal(500);
-            canvas = service.halfSize(canvas);
-            expect(canvas.width).to.equal(250);
-            expect(canvas.width).to.equal(250);
-        });
-    });
-
-    describe('resize', function() {
+    describe('resizeImageWidthHeight', function() {
        it('should return a base64 image with an jpg image in entry', function(done) {
            var img = new Image();
            img.onload = function() {
-               var data = service.resize(img);
+               var data = service.resizeImageWidthHeight(img);
 
                expect(data).to.be.not.null;
                expect(data.indexOf('data:image/jpeg;base64')).to.be.greaterThan(-1);
@@ -61,11 +47,11 @@ describe('[resize] resize-service', function() {
         });
     });
 
-    describe('startResize', function() {
+    describe('resizeByHeight', function() {
         it('should return a base64 img with no error', function(done) {
             var src = 'fixture/img.jpg';
 
-            service.startResize(src, function(err, data){
+            service.resizeByHeight(src, 300, function(err, data){
                 expect(err).to.be.null;
                 expect(data).to.be.not.null;
                 expect(data.indexOf('data:image/jpeg;base64')).to.be.greaterThan(-1);

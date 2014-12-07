@@ -3,10 +3,10 @@
  */
 'use strict';
 
-describe('[resize] resizeLocalPic-service', function() {
+describe('[images-resizer] resizeLocalPic-service', function() {
     var service, rootScope;
 
-    beforeEach(module('resize'));
+    beforeEach(module('images-resizer'));
     beforeEach(inject(function($injector, $rootScope) {
         service = $injector.get('readLocalPicService');
         rootScope = $rootScope;

@@ -13,5 +13,6 @@ angular.module('app', [
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'mainScreen'
+    'mainScreen',
+    'resize'
 ]);

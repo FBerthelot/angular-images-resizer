@@ -26,11 +26,11 @@
     "angular-mocks": "~1.3.1"
   },
   "private": false,
-  "_release": "bc59a8a87c",
+  "_release": "b63c4b2425",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "bc59a8a87c605b8602e1e4afe90a7908a0dd9de0"
+    "commit": "b63c4b24259ea8c1c0dbe6f9f5aac7871441bf70"
   },
   "_source": "git://github.com/FBerthelot/angular-images-resizer.git",
   "_target": "*",

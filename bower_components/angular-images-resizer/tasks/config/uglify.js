@@ -6,6 +6,9 @@
 module.exports = function (grunt) {
     grunt.config.merge({
         uglify: {
+            options: {
+                mangle: false
+            },
             dist: {
                 files: {
                     'angular-images-resizer.js': ['src/{,*/}*.js']

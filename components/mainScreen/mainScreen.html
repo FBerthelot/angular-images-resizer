@@ -1,6 +1,25 @@
-<header>
-    <h1>Try it !</h1>
-</header>
-<div class="row">
-    <input type="file" id="myFileInput">
+<div class="mainRow">
+    <nav>
+        <ul>
+            <li>Basic utilisazion</li>
+            <li>From input file</li>
+        </ul>
+    </nav>
+
+    <section class="mainSection">
+        <article>
+            <h2>Basic demonstration</h2>
+            <img id="basicImage" alt="Nope chuck testa" src="ressources/aurora.jpg">
+
+            <button type="button" role="button" id="basicResize" class="largeButton" ng-click="basicResize()">Resize this image</button>
+
+            <div class="imageResized" id="basicImageResized"></div>
+        </article>
+
+        <article>
+            <h2>Resize image from input file (under construction)</h2>
+            <input type="file" id="myFileInput">
+        </article>
+    </section>
 </div>
+

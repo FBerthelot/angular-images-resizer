@@ -1,0 +1,99 @@
+/** BODY **/
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #f5f5f5;
+    min-height: 100%;
+    margin: 0;
+
+    color: #333333;
+}
+
+
+/** HEADER **/
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: url(../ressources/aurora.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0 75%;
+    background-color:   #009688;
+}
+
+header h1 {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0 15px 0 15px;
+    margin: 0;
+    height: 65px;
+    line-height: 65px;
+    color: #ffffff;
+    font-size: x-large;
+}
+
+/** Navigation Menu **/
+nav {
+    position: fixed;
+    top: 65px;
+    bottom: 0;
+    width: 20%;
+}
+
+.mainSection {
+    position: absolute;
+    top: 65px;
+    left: 20%;
+    right: 0;
+    padding: 15px;
+}
+
+/** Articles genral rules **/
+article {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(165, 165, 165, 0.27)
+}
+article h2 {
+    font-size: large;
+    margin: 0 0 15px;
+}
+article img {
+    max-width: 100%;
+}
+
+/** button **/
+button {
+    -webkit-appearance: none;
+    -moz-appearance:    none;
+    appearance:  none;
+
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #ffca36;
+    opacity: 0.9;
+    font-weight: bold;
+    font-size: 1.2em;
+
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+button:hover {
+    opacity: 1;
+}
+
+.largeButton {
+    width: 80%;
+    margin-left: 10%;
+    height: 40px;
+}
+
+
+.imageResized {
+    width: 100%;
+}

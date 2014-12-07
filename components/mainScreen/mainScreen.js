@@ -4,4 +4,4 @@
 'use strict';
 
 
-angular.module('mainScreen', []);
+angular.module('mainScreen', ['resize']);

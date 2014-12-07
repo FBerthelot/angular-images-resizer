@@ -4,11 +4,7 @@
         <meta charset="utf-8">
         <title>Angular-image-resizer</title>
         <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-
-        <!-- bower:css -->
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-        <!-- endbower -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="styles/main.css">
 
@@ -18,17 +14,17 @@
           <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+        <header>
+            <h1>Angular-image-resizer</h1>
+        </header>
 
-        <main class="container-fluid">
-            <main ng-view=""></main>
-        </main>
+        <main ng-view=""></main>
 
         <!--[if lt IE 9]>
-        <script src="bower_components/es5-shim/es5-shim.js"></script>
-        <script src="bower_components/json3/lib/json3.min.js"></script>
+            <script src="bower_components/es5-shim/es5-shim.js"></script>
+            <script src="bower_components/json3/lib/json3.min.js"></script>
         <![endif]-->
 
-        <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
@@ -36,10 +32,10 @@
         <script src="bower_components/angular-cookies/angular-cookies.js"></script>
         <script src="bower_components/angular-animate/angular-animate.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="bower_components/angular-images-resizer/angular-images-resizer.js"></script>
+        <script src="bower_components/angular-images-resizer/src/resize.js"></script>
+        <script src="bower_components/angular-images-resizer/src/resize-service.js"></script>
+        <script src="bower_components/angular-images-resizer/src/resizeLocalPic-service.js"></script>
         <!-- endbower -->
-        <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="components/mainScreen/mainScreen.js"></script>

@@ -1,2 +1,11 @@
 .idea/
 .directory
+node_modules/
+
+#all files useless for the github page
+bower_components/angular-mocks/
+bower_components/chai
+bower_components/mocha
+bower_components/sinon
+
+test/

@@ -22,6 +22,7 @@ header {
     background-repeat: no-repeat;
     background-position: 0 75%;
     background-color:   #009688;
+    z-index: 500;
 }
 
 header h1 {
@@ -41,13 +42,25 @@ nav {
     position: fixed;
     top: 65px;
     bottom: 0;
-    width: 20%;
+    width: 15%;
+}
+nav ul {
+    text-decoration: none;
+    list-style: none;
+    padding: 15px;
+}
+nav a, nav a:hover, nav a:visited, nav a:active{
+    color: #333333;
+    text-decoration: none;
+}
+nav a:hover {
+    color: #000000;
 }
 
 .mainSection {
     position: absolute;
     top: 65px;
-    left: 20%;
+    left: 15%;
     right: 0;
     padding: 15px;
 }

@@ -20,6 +20,7 @@ angular.module('mainScreen')
                     }
 
                     basicImgResized.src = image;
+                    console.log('this is the size in KiloByte of the resized image: ',Math.round((image.length - 'data:image/jpg;base64,'.length)*3/4)/1024);
                     document.getElementById('basicImageResized').appendChild(basicImgResized);
                 });
             };
@@ -41,6 +42,7 @@ angular.module('mainScreen')
                             return;
                         }
                         inputImgResized.src = image;
+                        console.log('this is the size in KiloByte of the resized image: ',Math.round((image.length - 'data:image/jpg;base64,'.length)*3/4)/1024);
                         document.getElementById('inputImageResized').appendChild(inputImgResized);
                     });
                 }, function(err){

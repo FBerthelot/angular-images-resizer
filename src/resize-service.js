@@ -10,11 +10,13 @@ angular.module('images-resizer')
         var mainCanvas;
         var _this = this;
 
-        var canvasSupported = !!(document.createElement('canvas').getContext && document.createElement('canvas').getContext('2d'));
+        var isCanvasSupported = !!(document.createElement('canvas').getContext && document.createElement('canvas').getContext('2d'));
 
-        /*
-         * Creates a new image object from the src
-         * Uses the deferred pattern
+
+        /**
+         * Creates a new image object from the src attributes
+         * @param src string src attribute of an img element
+         * @returns promise
          */
         this.createImage = function (src) {
             var deferred = $q.defer();
@@ -29,14 +31,31 @@ angular.module('images-resizer')
             return deferred.promise;
         };
 
+        this.resizeCanvas = function (cnv, width, height) {
+            if(!width || !height) { return cnv; }
 
-        /*
-         * Resize image by height
+            var tmpCanvas = document.createElement('canvas');
+            tmpCanvas.width = width;
+            tmpCanvas.height = height;
+            var cnx = tmpCanvas.getContext('2d');
+            cnx.drawImage(cnv, 0, 0, tmpCanvas.width, tmpCanvas.height);
+            return tmpCanvas;
+        };
+
+        /**
+         * Resize an image with a given src attribute
+         * @param src string src attribute of an img element
+         * @param options json contain all options to resize an image (see all options available directly in th code below)
+         * @param cb function callback of the function
          */
         this.resizeImage = function(src, options, cb) {
             //if no callback is specified or canvas is not supported
-            if(!canvasSupported || !options) {
+            if(!isCanvasSupported) {
                 cb('Canvas is not supported on your browser', null);
+                return;
+            }
+            if(!cb || !options || !src) {
+                cb('Missing argument when calling resizeImage function', null);
                 return;
             }
 
@@ -83,7 +102,14 @@ angular.module('images-resizer')
                 });
         };
 
-
+        /**
+         * Resize image according to the width or the height or both
+         * @param image DomImage html image to resize
+         * @param width integer desired final image width
+         * @param height integer desired final image height
+         * @param step integer the number of step to finally have the image to the desired size
+         * @returns resized image
+         */
         this.resizeImageWidthHeight = function(image, width, height, step) {
             if(!image) { return null; }
 
@@ -101,24 +127,28 @@ angular.module('images-resizer')
                 height = (image.width * image.height) / width;
             }
 
-            var pixelStepWidth = image.width === width ? 0 : (image.width - width)/step;
-            var pixelStepHeight = image.height === height ? 0 : (image.height- height)/step;
+            var pixelStepWidth = (image.width === width) || !step ? 0 : (image.width - width)/step;
+            var pixelStepHeight = (image.height === height) || !step ? 0 : (image.height - height)/step;
             mainCanvas.width = image.width;
             mainCanvas.height = image.height;
 
-
             mainCanvas.getContext('2d').drawImage(image, 0, 0, mainCanvas.width , mainCanvas.height);
-            for(var i=1; i< step; i++){
-                mainCanvas.width = image.width - (pixelStepWidth * i);
-                mainCanvas.height = image.height- (pixelStepHeight * i);
-                mainCanvas = document.createElement('canvas').getContext('2d').drawImage(mainCanvas, 0, 0, mainCanvas.width, mainCanvas.height);
+            for(var i=1; i<step; i++){
+                var newWidth = image.width - (pixelStepWidth * i);
+                var newHeight = image.height- (pixelStepHeight * i);
+                mainCanvas = this.resizeCanvas(mainCanvas, newWidth, newHeight);
             }
-            mainCanvas = document.createElement('canvas').getContext('2d').drawImage(mainCanvas, 0, 0, width, height);
+            mainCanvas = this.resizeCanvas(mainCanvas, width, height);
 
-            console.log('image',image.width ,image.height ,width , height, step, pixelStepWidth, pixelStepHeight);
             return mainCanvas.toDataURL('image/jpeg');
         };
 
+        /**
+         * Resize image to the approximately absolute size in octet
+         * @param image htmlImage the miage to resize
+         * @param size number the final size in octet
+         * @returns resize image in base64
+         */
         this.resizeImageBySize = function (image, size) {
             if(!image){
                 return null;

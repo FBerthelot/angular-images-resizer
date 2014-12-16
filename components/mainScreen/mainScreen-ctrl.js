@@ -13,14 +13,13 @@ angular.module('mainScreen')
              */
             var basicImgResized = document.createElement('img');
             $scope.basicResize = function() {
-                resizeService.startResize('ressources/aurora.jpg', function(err, image){
+                resizeService.resizeImage('ressources/aurora.jpg', {width: 500, height: 500}, function(err, image){
                     if(err) {
                         console.error(err);
                         return;
                     }
 
                     basicImgResized.src = image;
-                    console.log('this is the size in KiloByte of the resized image: ',Math.round((image.length - 'data:image/jpg;base64,'.length)*3/4)/1024);
                     document.getElementById('basicImageResized').appendChild(basicImgResized);
                 });
             };
@@ -36,13 +35,12 @@ angular.module('mainScreen')
                     inputImg.src = img;
                     document.getElementById('inputImg').appendChild(inputImg);
 
-                    resizeService.startResize(img, function(err, image){
+                    resizeService.resizeImage(img, {width: 500, height: 500}, function(err, image){
                         if(err) {
                             console.error(err);
                             return;
                         }
                         inputImgResized.src = image;
-                        console.log('this is the size in KiloByte of the resized image: ',Math.round((image.length - 'data:image/jpg;base64,'.length)*3/4)/1024);
                         document.getElementById('inputImageResized').appendChild(inputImgResized);
                     });
                 }, function(err){

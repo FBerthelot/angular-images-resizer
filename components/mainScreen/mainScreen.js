@@ -4,4 +4,4 @@
 'use strict';
 
 
-angular.module('mainScreen', ['resize']);
+angular.module('mainScreen', ['images-resizer']);

@@ -14,5 +14,5 @@ angular.module('app', [
     'ngResource',
     'ngRoute',
     'mainScreen',
-    'resize'
+    'images-resizer'
 ]);

@@ -11,6 +11,8 @@ body {
     color: #333333;
 }
 
+.fll { float: left;}
+.width100 { width:100%; }
 
 /** HEADER **/
 header {
@@ -104,9 +106,4 @@ button:hover {
     width: 80%;
     margin-left: 10%;
     height: 40px;
-}
-
-
-.imageResized {
-    width: 100%;
 }

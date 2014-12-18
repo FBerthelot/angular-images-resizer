@@ -13,7 +13,10 @@
 
             <button type="button" role="button" id="basicResize" class="largeButton" ng-click="basicResize()">Resize this image</button>
 
-            <div class="imageResized" id="basicImageResized"></div>
+            <div class="imageResized fll" id="basicImageResizedHeight"></div>
+            <div class="imageResized fll" id="basicImageResizedWidth"></div>
+            <div class="imageResized fll" id="basicImageResizedHeightAndWidth"></div>
+            <div class="imageResized width100" id="basicImageResizedbySize"></div>
         </article>
 
         <article id="input">
@@ -21,9 +24,9 @@
             <input type="file" id="fileInput" name="fileInput">
 
             <h3 class="inputTitles" hidden>Image from your computer</h3>
-            <div class="imageResized" id="inputImg"></div>
+            <div class="imageResized width100" id="inputImg"></div>
             <h3 class="inputTitles" hidden>Image resized</h3>
-            <div class="imageResized" id="inputImageResized"></div>
+            <div class="imageResized width100" id="inputImageResized"></div>
 
         </article>
     </section>

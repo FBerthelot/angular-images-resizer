@@ -11,16 +11,51 @@ angular.module('mainScreen')
             /**
              * Basic démonstration of the service
              */
-            var basicImgResized = document.createElement('img');
             $scope.basicResize = function() {
-                resizeService.resizeImage('ressources/aurora.jpg', {width: 500, height: 500}, function(err, image){
+                //resize by width
+                resizeService.resizeImage('ressources/aurora.jpg', {width: 500}, function(err, image){
+                    if(err) {
+                        console.error(err);
+                        return;
+                    }
+                    var basicImgResizedWidth = document.createElement('img');
+                    basicImgResizedWidth.src = image;
+                    document.getElementById('basicImageResizedWidth').appendChild(basicImgResizedWidth);
+                    //document.getElementById('basicImageResizedWidth').appendChild('<p>Width: 500px</p>');
+                });
+
+                //resize by height
+                resizeService.resizeImage('ressources/aurora.jpg', {height: 500}, function(err, image){
                     if(err) {
                         console.error(err);
                         return;
                     }
 
-                    basicImgResized.src = image;
-                    document.getElementById('basicImageResized').appendChild(basicImgResized);
+                    var basicImgResizedHeight = document.createElement('img');
+                    basicImgResizedHeight.src = image;
+                    document.getElementById('basicImageResizedHeight').appendChild(basicImgResizedHeight);
+                });
+
+                //resize by both width and height
+                resizeService.resizeImage('ressources/aurora.jpg', {width: 500, height: 500}, function(err, image){
+                    if(err) {
+                        console.error(err);
+                        return;
+                    }
+                    var basicImgResizedBoth = document.createElement('img');
+                    basicImgResizedBoth.src = image;
+                    document.getElementById('basicImageResizedHeightAndWidth').appendChild(basicImgResizedBoth);
+                });
+
+                //resize by size
+                resizeService.resizeImage('ressources/aurora.jpg', {size: 100, sizeScale: 'ko'}, function(err, image){
+                    if(err) {
+                        console.error(err);
+                        return;
+                    }
+                    var basicImgResizedSize = document.createElement('img');
+                    basicImgResizedSize.src = image;
+                    document.getElementById('basicImageResizedbySize').appendChild(basicImgResizedSize);
                 });
             };
 

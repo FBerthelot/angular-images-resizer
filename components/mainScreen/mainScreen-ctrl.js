@@ -21,7 +21,7 @@ angular.module('mainScreen')
                     var basicImgResizedWidth = document.createElement('img');
                     basicImgResizedWidth.src = image;
                     document.getElementById('basicImageResizedWidth').appendChild(basicImgResizedWidth);
-                    //document.getElementById('basicImageResizedWidth').appendChild('<p>Width: 500px</p>');
+                    $('#basicImageResizedWidth').removeClass('hidden');
                 });
 
                 //resize by height
@@ -34,6 +34,7 @@ angular.module('mainScreen')
                     var basicImgResizedHeight = document.createElement('img');
                     basicImgResizedHeight.src = image;
                     document.getElementById('basicImageResizedHeight').appendChild(basicImgResizedHeight);
+                    $('#basicImageResizedHeight').removeClass('hidden');
                 });
 
                 //resize by both width and height
@@ -45,6 +46,7 @@ angular.module('mainScreen')
                     var basicImgResizedBoth = document.createElement('img');
                     basicImgResizedBoth.src = image;
                     document.getElementById('basicImageResizedHeightAndWidth').appendChild(basicImgResizedBoth);
+                    $('#basicImageResizedHeightAndWidth').removeClass('hidden');
                 });
 
                 //resize by size
@@ -56,6 +58,7 @@ angular.module('mainScreen')
                     var basicImgResizedSize = document.createElement('img');
                     basicImgResizedSize.src = image;
                     document.getElementById('basicImageResizedbySize').appendChild(basicImgResizedSize);
+                    $('#basicImageResizedbySize').removeClass('hidden');
                 });
             };
 

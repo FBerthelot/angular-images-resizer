@@ -81,18 +81,18 @@ angular.module('images-resizer')
                     }
                     else if (options.size) {
                         //conversion of the size in bytes
-                        switch (options.size.toLowerCase()) {
-                            case 'ko':
-                                options.size *= 1024;
-                                break;
-                            case 'mo':
-                                options.size *= 1024 * 1024;
-                                break;
-                            case 'go':
-                                options.size *= 1024 * 1024 * 1024;
-                                break;
-                            default:
-                                break;
+                        if (typeof options.sizeScale === 'string') {
+                            switch (options.sizeScale.toLowerCase()) {
+                                case 'ko':
+                                    options.size *= 1024;
+                                    break;
+                                case 'mo':
+                                    options.size *= 1024 * 1024;
+                                    break;
+                                case 'go':
+                                    options.size *= 1024 * 1024 * 1024;
+                                    break;
+                            }
                         }
                         cb(null, _this.resizeImageBySize(img, options.size, options.step));
                     }
@@ -121,10 +121,10 @@ angular.module('images-resizer')
                 height = image.height;
             }
             else if(!width && height) {
-                width = (image.width * image.height) / height;
+                width = (height / image.height) * image.width;
             }
             else if(width && !height){
-                height = (image.width * image.height) / width;
+                height = (width/ image.width) * image.height;
             }
 
             var pixelStepWidth = (image.width === width) || !step ? 0 : (image.width - width)/step;
@@ -160,7 +160,9 @@ angular.module('images-resizer')
             mainCanvas.getContext('2d').drawImage(image, 0, 0, mainCanvas.width, mainCanvas.height);
             var tmpResult = mainCanvas.toDataURL('image/jpeg');
 
-            while((Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4) > size) {
+            var sizeOfTheImage =  (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
+
+            while( sizeOfTheImage > size) {
                 var canvas = document.createElement('canvas');
                 canvas.width = mainCanvas.width /2;
                 canvas.height = mainCanvas.height / 2;
@@ -169,6 +171,7 @@ angular.module('images-resizer')
 
                 mainCanvas =  canvas;
                 tmpResult = mainCanvas.toDataURL('image/jpeg');
+                sizeOfTheImage = (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
             }
 
             return tmpResult;

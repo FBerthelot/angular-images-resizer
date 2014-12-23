@@ -63,7 +63,7 @@ angular.module('images-resizer')
                 height: options.height ? options.height : options.width ? null: options.size ? null: 1024,
                 width: options.width ? options.width : options.height ? null: options.size ? null: 1024,
                 size: options.size ? options.size : 500,
-                sizeScale: options.size ? options.size : 'ko',
+                sizeScale: options.sizeScale ? options.sizeScale : 'ko',
                 step: options.step ? options.step : 3
             };
 
@@ -159,22 +159,34 @@ angular.module('images-resizer')
 
             mainCanvas.getContext('2d').drawImage(image, 0, 0, mainCanvas.width, mainCanvas.height);
             var tmpResult = mainCanvas.toDataURL('image/jpeg');
+            var result = tmpResult;
 
             var sizeOfTheImage =  (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
+            //
+            var divideStrategy =  sizeOfTheImage / (size * 2) <= 1 ? 0.9 :  sizeOfTheImage / (size * 2.3);
 
             while( sizeOfTheImage > size) {
                 var canvas = document.createElement('canvas');
-                canvas.width = mainCanvas.width /2;
-                canvas.height = mainCanvas.height / 2;
+                canvas.width = mainCanvas.width / divideStrategy;
+                canvas.height = mainCanvas.height / divideStrategy;
 
                 canvas.getContext('2d').drawImage(mainCanvas, 0, 0, canvas.width, canvas.height);
+                tmpResult = mainCanvas.toDataURL('image/jpeg');
+                var sizeOfTheImageTmp = (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
+
+                if(sizeOfTheImageTmp/size < 0.5) {
+                    divideStrategy =  sizeOfTheImage / (size * 2) <= 1 ? 0.9 :  sizeOfTheImage / (size * 2.3);
+                }
+                else {
+                    mainCanvas = canvas;
+                    result = tmpResult;
+                    sizeOfTheImage = (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
+                }
 
                 mainCanvas =  canvas;
-                tmpResult = mainCanvas.toDataURL('image/jpeg');
-                sizeOfTheImage = (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
             }
 
-            return tmpResult;
+            return result;
         };
 
     }]);

@@ -38,7 +38,7 @@ describe('[images-resizer][resize-service]', function() {
                var data = service.resizeImageWidthHeight(img);
 
                expect(data).to.be.not.null;
-               expect(data.indexOf('data:image/jpeg;base64')).to.be.greaterThan(-1);
+               expect(data).to.contain('data:image/jpeg;base64');
                //check size of the returned image
                service.createImage(data).then(
                    function(image) {
@@ -64,7 +64,7 @@ describe('[images-resizer][resize-service]', function() {
                var data = service.resizeImageWidthHeight(img, null, 300);
 
                expect(data).to.be.not.null;
-               expect(data.indexOf('data:image/jpeg;base64')).to.be.greaterThan(-1);
+               expect(data).to.contain('data:image/jpeg;base64');
                 //check size of the returned image
                service.createImage(data).then(
                    function(image) {
@@ -90,7 +90,7 @@ describe('[images-resizer][resize-service]', function() {
                 var data = service.resizeImageWidthHeight(img, 300, null, 2);
 
                 expect(data).to.be.not.null;
-                expect(data.indexOf('data:image/jpeg;base64')).to.be.greaterThan(-1);
+                expect(data).to.contain('data:image/jpeg;base64');
                 //check size of the returned image
                 service.createImage(data).then(
                     function(image) {
@@ -117,7 +117,7 @@ describe('[images-resizer][resize-service]', function() {
                 var data = service.resizeImageWidthHeight(img, 300, 300, 2);
 
                 expect(data).to.be.not.null;
-                expect(data.indexOf('data:image/jpeg;base64')).to.be.greaterThan(-1);
+                expect(data).to.contain('data:image/jpeg;base64');
                 //check size of the returned image
                 service.createImage(data).then(
                     function(image) {
@@ -140,15 +140,40 @@ describe('[images-resizer][resize-service]', function() {
         });
     });
 
-    describe('- resizeImage -', function() {
-        it('should return a base64 img with no error', function() {
-            var src = 'fixture/img.jpg';
+    describe('- resizeImageBySize -', function() {
+        it('should return a base64 img with a lower size than specified in the option', function(done) {
+            var img = new Image();
+            img.onload = function() {
+                //When i wrote this test, the test image = 8.3Ko
+                var data = service.resizeImageBySize(img, 5000);
 
-            service.resizeImage(src, {} ,function(err, data){
+                expect(data).to.be.not.null;
+                expect(data).to.contain('data:image/jpeg;base64');
+                //check the size of the returned image
+                expect(Math.round(data.length - 'data:image/jpeg;base64,'.length)*3/4).to.be.below(5000);
+                done();
+            };
+
+            img.src = 'fixture/img.jpg';
+        });
+    });
+
+    describe('- resizeImage -', function() {
+        it('should return a base64 img with no error', function(done) {
+
+            service.resizeImage('fixture/img.jpg', {} ,function(err, data) {
                 expect(err).to.be.null;
                 expect(data).to.be.not.null;
-                expect(data.indexOf('data:image/jpeg;base64')).to.be.greaterThan(-1);
+                expect(data).to.contain('data:image/jpeg;base64');
+                done();
             });
+
+            setTimeout(function() {
+                    rootScope.$digest();
+                    setTimeout(function() {
+                        rootScope.$digest();
+                    },500);
+                },500);
         });
     });
 });

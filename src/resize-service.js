@@ -162,7 +162,6 @@ angular.module('images-resizer')
             var result = tmpResult;
 
             var sizeOfTheImage =  (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
-            //
             var divideStrategy =  sizeOfTheImage / (size * 2) <= 1 ? 0.9 :  sizeOfTheImage / (size * 2.3);
 
             while( sizeOfTheImage > size) {

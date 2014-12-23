@@ -4,7 +4,7 @@
 /* globals FileError: false; */
 'use strict';
 
-angular.module('resize')
+angular.module('images-resizer')
     .service('readLocalPicService', ['$q', function($q) {
 
         /**

@@ -16,24 +16,36 @@ bower install angular-image-resize
 
 Add the component to your app:
 ```javascript
-angular.module('app', ['resize']); 
+angular.module('app', ['images-resizer']); 
 ```
 
 Then simply add the service to your code and start resizing your images!
 ```javascript 
   angular.module('app', ['resizeService', '$scope',
-        function(resizeService, $scope) {
-          var mysImageSource = $('#myImage').src;
-          resizeService.startResize(myImageSource , function(err, image){
-            if(err) {
-              console.error(err);
-              return;
-            }
-            
-            var myImageResized = image; // return a base64 image
-          });
+        resizeService.resizeImage('ressources/imageToResize', {size: 100, sizeScale: 'ko', otherOptions: ''}, function(err, image){
+                    if(err) {
+                        console.error(err);
+                        return;
+                    }
+                    
+                    //Add the resized image into the 
+                    var imageResized = document.createElement('img');
+                    imageResized.src = image;
+                    $('body').appendChild(imageResized);
+                });
     }]);
 ```
+##Availables functions
+####resizeImage
+This is the main function of this service. The function take 3 argument, the src of the image, the options to resize the image and the callback.
+The src can be an base 64image.
+###### Options
+* height: desired height of the resized image
+* width: desired width of the resized image
+* size: desired size of the resized image (Size are by default in Octet)
+* sizeScale: 'o' || 'ko' || 'mo' || 'go'
+* step: number of step to resize the image, by default 3. Bigger the number, better is the final image. Bigger the number, bigger the time to resize is.
+
 
 ##Compatibility
 This module uses canvas, so it's only compatible with:

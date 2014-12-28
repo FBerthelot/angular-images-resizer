@@ -4,8 +4,8 @@
 'use strict';
 
 angular.module('mainScreen')
-    .controller('mainScreenCtrl', ['$scope', '$document', 'resizeService', 'readLocalPicService',
-        function($scope, $document, resizeService, readLocalPicService) {
+    .controller('mainScreenCtrl', ['$scope', '$document', 'resizeService', '$location',  '$anchorScroll', 'readLocalPicService',
+        function($scope, $document, resizeService, $location, $anchorScroll, readLocalPicService) {
             $document[0].title = 'Angular-images-resizer';
 
             /**
@@ -90,4 +90,11 @@ angular.module('mainScreen')
             $('#fileInput').change(function() {
                 inputResize(this);
             });
+
+
+            //http://stackoverflow.com/questions/14712223/how-to-handle-anchor-hash-linking-in-angularjs
+            $scope.scrollTo = function(id) {
+                $location.hash(id);
+                $anchorScroll();
+            }
     }]);

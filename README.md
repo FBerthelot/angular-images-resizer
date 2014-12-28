@@ -49,12 +49,13 @@ The src can be an base 64image.
 
 ##Compatibility
 This module uses canvas, so it's only compatible with:
-* Firefox ??+
-* Chrome ??+
+* Firefox 4+
+* Chrome 14+
 * Internet explorer 9+
-* ios ?+
-* Android browser ??+
-* Chrome for android ?+
+* Safari 5+
+* ios ??
+* Android browser 4+
+* Chrome for android All
 
 ##I need help
 * This angular component doesn't work on iPhones with iOS 8.1, but works on iPad and iPod touch with iOS 8.1. I still don't understand why, if someone has an explanation, it would be nice.

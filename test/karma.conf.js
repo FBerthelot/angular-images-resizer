@@ -24,6 +24,7 @@ module.exports = function(config) {
         '../bower_components/chai/chai.js',
 
         //App-specific Code
+        //'../angular-images-resizer.js',
         '../src/resize.js',
         '../src/*.js',
 

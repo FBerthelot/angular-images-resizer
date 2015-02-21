@@ -11,7 +11,7 @@ You can test this module on this site exemple: http://fberthelot.github.io/angul
 ##Get started
 Add this module to your project with bower:
 ```javascript 
-bower install angular-image-resize
+bower install angular-images-resizer
 ```
 
 Add the component to your app:

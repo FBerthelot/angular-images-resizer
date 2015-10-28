@@ -28,5 +28,5 @@
     "sinon": "^1.11.1",
     "time-grunt": "^1.0.0"
   },
-  "private": true
+  "private": false
 }

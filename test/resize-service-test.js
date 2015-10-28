@@ -20,8 +20,7 @@ describe('[images-resizer][resize-service]', function() {
                     done();
                 },
                 function() {
-                    expect(true).to.be.false;
-                    done();
+                    done('fail');
                 }
             );
 
@@ -46,8 +45,7 @@ describe('[images-resizer][resize-service]', function() {
                        done();
                    },
                    function() {
-                       expect(true).to.be.false;
-                       done();
+                       done('fail');
                    }
                );
                setTimeout(function() {
@@ -73,8 +71,7 @@ describe('[images-resizer][resize-service]', function() {
                        done();
                    },
                    function() {
-                       expect(true).to.be.false;
-                       done();
+                       done('fail');
                    }
                );
                setTimeout(function() {
@@ -99,8 +96,7 @@ describe('[images-resizer][resize-service]', function() {
                         done();
                     },
                     function() {
-                        expect(true).to.be.false;
-                        done();
+                        done('fail');
                     }
                 );
                 setTimeout(function() {
@@ -127,8 +123,34 @@ describe('[images-resizer][resize-service]', function() {
                         done();
                     },
                     function() {
-                        expect(true).to.be.false;
+                        done('fail');
+                    }
+                );
+                setTimeout(function() {
+                    rootScope.$digest();
+                },500);
+            };
+
+            img.src = 'fixture/img.jpg';
+        });
+
+        it('should return a base64 image with specific height and width to png format', function(done) {
+            var img = new Image();
+            img.onload = function() {
+                var data = service.resizeImageWidthHeight(img, 300, 300, 2, 'image/png');
+
+                expect(data).to.be.not.null;
+                expect(data).to.contain('data:image/png;base64');
+                //check size of the returned image
+                service.createImage(data).then(
+                    function(image) {
+                        expect(image).to.be.not.null;
+                        expect(image.width).to.be.equal(300);
+                        expect(image.height).to.be.equal(300);
                         done();
+                    },
+                    function() {
+                        done('fail');
                     }
                 );
                 setTimeout(function() {
@@ -156,6 +178,7 @@ describe('[images-resizer][resize-service]', function() {
 
             img.src = 'fixture/img.jpg';
         });
+
         it('should return null when no image is specified', function() {
             var data = service.resizeImageBySize();
             expect(data).to.be.null;
@@ -179,7 +202,6 @@ describe('[images-resizer][resize-service]', function() {
         });
 
         it('should return a base64 img with no error when no specific option is specified', function(done) {
-
             service.resizeImage('fixture/img.jpg', {} ,function(err, data) {
                 expect(err).to.be.null;
                 expect(data).to.be.not.null;
@@ -268,6 +290,36 @@ describe('[images-resizer][resize-service]', function() {
                         rootScope.$digest();
                     },500);
                 },500);
+        });
+    });
+
+    describe('- calulateImageSize -', function() {
+        it('should return the size of the img for a jpg image', function(done) {
+            var img = new Image();
+            img.onload = function() {
+                var data = service.resizeImageWidthHeight(img, null, null, null, 'image/jpeg');
+                expect(service.calulateImageSize(data)).to.be.equal(58219);
+                done();
+            };
+            img.src = 'fixture/img.png';
+
+            setTimeout(function() {
+                rootScope.$digest();
+            },500);
+        });
+
+        it('should return the size of the img for a png image', function(done) {
+            var img = new Image();
+            img.onload = function() {
+                var data = service.resizeImageWidthHeight(img, null, null, null, 'image/png');
+                expect(service.calulateImageSize(data, 'image/png')).to.be.equal(398622);
+                done();
+            };
+            img.src = 'fixture/img.png';
+
+            setTimeout(function() {
+                rootScope.$digest();
+            },500);
         });
     });
 });

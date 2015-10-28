@@ -45,6 +45,7 @@ The src can be an base 64image.
 * size: desired size of the resized image (Size are by default in Octet)
 * sizeScale: 'o' || 'ko' || 'mo' || 'go'
 * step: number of step to resize the image, by default 3. Bigger the number, better is the final image. Bigger the number, bigger the time to resize is.
+* outputFormat: specify the image type. Default value is 'image/jpeg'. [Check this page to see what format are supported.] (https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL)
 
 
 ##Compatibility

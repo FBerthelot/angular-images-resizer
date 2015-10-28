@@ -25,6 +25,12 @@ angular.module('images-resizer')
             img.onload = function() {
                 deferred.resolve(img);
             };
+            img.onabort = function() {
+                deferred.reject('image was aborded');
+            };
+            img.onerror = function(err) {
+                deferred.reject(err);
+            };
 
             img.src = src;
 
@@ -64,7 +70,8 @@ angular.module('images-resizer')
                 width: options.width ? options.width : options.height ? null: options.size ? null: 1024,
                 size: options.size ? options.size : 500,
                 sizeScale: options.sizeScale ? options.sizeScale : 'ko',
-                step: options.step ? options.step : 3
+                step: options.step ? options.step : 3,
+                outputFormat: options.outputFormat ? options.outputFormat : 'image/jpeg'
             };
 
             _this.createImage(src).then(
@@ -72,7 +79,7 @@ angular.module('images-resizer')
                     if (options.height || options.width) {
                         _this.createImage(src).then(
                             function (img) {
-                                cb(null, _this.resizeImageWidthHeight(img, options.width, options.height , options.step));
+                                cb(null, _this.resizeImageWidthHeight(img, options.width, options.height , options.step, options.outputFormat));
                             },
                             function (err) {
                                 cb(err, null);
@@ -94,7 +101,7 @@ angular.module('images-resizer')
                                     break;
                             }
                         }
-                        cb(null, _this.resizeImageBySize(img, options.size, options.step));
+                        cb(null, _this.resizeImageBySize(img, options.size, options.outputFormat));
                     }
                 },
                 function(err) {
@@ -108,10 +115,12 @@ angular.module('images-resizer')
          * @param width integer desired final image width
          * @param height integer desired final image height
          * @param step integer the number of step to finally have the image to the desired size
+         * @param outputFormat string the format of the output file for exemple image/jpeg, image/png,...
          * @returns resized image
          */
-        this.resizeImageWidthHeight = function(image, width, height, step) {
+        this.resizeImageWidthHeight = function(image, width, height, step, outputFormat) {
             if(!image) { return null; }
+            if(!outputFormat) { outputFormat = 'image/jpeg'; }
 
             mainCanvas = document.createElement('canvas');
 
@@ -140,38 +149,39 @@ angular.module('images-resizer')
             }
             mainCanvas = this.resizeCanvas(mainCanvas, width, height);
 
-            return mainCanvas.toDataURL('image/jpeg');
+            return mainCanvas.toDataURL(outputFormat);
         };
 
         /**
          * Resize image to the approximately absolute size in octet
          * @param image htmlImage the miage to resize
          * @param size number the final size in octet
+         * @param outputFormat string the format of the output file for exemple image/jpeg, image/png,...
          * @returns resize image in base64
          */
-        this.resizeImageBySize = function (image, size) {
-            if(!image){
-                return null;
-            }
+        this.resizeImageBySize = function (image, size, outputFormat) {
+            if(!image) { return null; }
+            if(!outputFormat) { outputFormat = 'image/jpeg'; }
+
             mainCanvas = document.createElement('canvas');
             mainCanvas.width = image.width;
             mainCanvas.height = image.height;
 
             mainCanvas.getContext('2d').drawImage(image, 0, 0, mainCanvas.width, mainCanvas.height);
-            var tmpResult = mainCanvas.toDataURL('image/jpeg');
+            var tmpResult = mainCanvas.toDataURL(outputFormat);
             var result = tmpResult;
 
-            var sizeOfTheImage =  (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
+            var sizeOfTheImage =  _this.calulateImageSize(tmpResult, outputFormat);
             var divideStrategy =  sizeOfTheImage / (size * 2) <= 1 ? 0.9 :  sizeOfTheImage / (size * 2.3);
 
-            while( sizeOfTheImage > size) {
+            while (sizeOfTheImage > size) {
                 var canvas = document.createElement('canvas');
                 canvas.width = mainCanvas.width / divideStrategy;
                 canvas.height = mainCanvas.height / divideStrategy;
 
                 canvas.getContext('2d').drawImage(mainCanvas, 0, 0, canvas.width, canvas.height);
-                tmpResult = mainCanvas.toDataURL('image/jpeg');
-                var sizeOfTheImageTmp = (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
+                tmpResult = mainCanvas.toDataURL(outputFormat);
+                var sizeOfTheImageTmp = _this.calulateImageSize(tmpResult, outputFormat);
 
                 if(sizeOfTheImageTmp/size < 0.5) {
                     divideStrategy =  sizeOfTheImage / (size * 2) <= 1 ? 0.9 :  sizeOfTheImage / (size * 2.3);
@@ -179,13 +189,30 @@ angular.module('images-resizer')
                 else {
                     mainCanvas = canvas;
                     result = tmpResult;
-                    sizeOfTheImage = (Math.round(tmpResult.length - 'data:image/jpg;base64,'.length)*3/4);
+                    sizeOfTheImage = _this.calulateImageSize(tmpResult, outputFormat);
                 }
 
                 mainCanvas =  canvas;
             }
-
             return result;
+        };
+
+        /**
+         * Return the size of the img by given the base64 img strings.
+         * @param imgString String base64 image
+         * @param outputFormat string the format of the output file for exemple image/jpeg, image/png,...
+         * @returns number size of the img
+         */
+        this.calulateImageSize = function(imgString, outputFormat) {
+            switch(outputFormat) {
+                case 'image/jpeg':
+                    outputFormat = 'image/jpg';
+                    break;
+                default :
+                    outputFormat = 'image/jpg';
+                    break;
+            }
+            return Math.round((imgString.length - ('data:'+ outputFormat +';base64,').length)* 3/4);
         };
 
     }]);

@@ -3,11 +3,17 @@
   "version": "0.9.2",
   "description": "Resize images client-side is now possible with this angular module",
   "author": "FBerthelot",
+  "license": "MIT",
+  "private": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/FBerthelot/angular-images-resizer"
   },
-  "license": "MIT",
+  "scripts": {
+    "test": "grunt test",
+    "build": "grunt uglify",
+    "lint": "grunt jshint"
+  },
   "devDependencies": {
     "chai": "^2.0.0",
     "grunt": "^0.4.5",
@@ -27,6 +33,5 @@
     "mocha": "^2.0.1",
     "sinon": "^1.11.1",
     "time-grunt": "^1.0.0"
-  },
-  "private": false
+  }
 }

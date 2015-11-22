@@ -1,6 +1,6 @@
 {
   "name": "angular-image-resizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Resize images client-side is now possible with this angular module",
   "author": "FBerthelot",
   "license": "MIT",

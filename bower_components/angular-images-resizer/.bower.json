@@ -1,6 +1,6 @@
 {
   "name": "angular-images-resizer",
-  "version": "0.9.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/FBerthelot/angular-images-resizer",
   "authors": [
     "Florent Berthelot <florent.berthelot35@gmail.com>"
@@ -27,13 +27,16 @@
     "angular-mocks": "~1.3.1"
   },
   "private": false,
-  "_release": "0.9.0",
+  "dependencies": {
+    "angular": "1.x.x"
+  },
+  "_release": "1.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "0.9.0",
-    "commit": "5fa8056b6da40380aa0337337861bd7ae27f9d85"
+    "tag": "1.0.1",
+    "commit": "0325a82cd3187c9bf1217512d2476aa6c911b17b"
   },
   "_source": "git://github.com/FBerthelot/angular-images-resizer.git",
-  "_target": "0.9.0",
+  "_target": "*",
   "_originalSource": "angular-images-resizer"
 }

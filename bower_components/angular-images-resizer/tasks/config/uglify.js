@@ -11,7 +11,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'angular-images-resizer.js': ['src/{,*/}*.js']
+                    'angular-images-resizer.js': ['src/resize.js','src/{,*/}*.js']
                 }
             }
         }

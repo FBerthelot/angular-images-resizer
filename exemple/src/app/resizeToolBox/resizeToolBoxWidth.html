@@ -1,0 +1,21 @@
+<md-bottom-sheet>
+    <form name="resizeForm" layout="row" layout-align="center center">
+        <md-input-container class="mrgRight15">
+            <label>Width</label>
+            <input type="number" step="any" name="width" ng-model="width" required>
+            <div ng-messages="resizeForm.width.$error">
+                <div ng-message="required">This is required.</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="mrgRight15">
+            <label>Height</label>
+            <input type="number" step="any" name="height" ng-model="height" required>
+            <div ng-messages="resizeForm.height.$error">
+                <div ng-message="required">This is required.</div>
+            </div>
+        </md-input-container>
+
+        <md-button ng-click="resize()" type="submit" class="md-raised md-primary">let's resize !</md-button>
+    </form>
+</md-bottom-sheet>
+

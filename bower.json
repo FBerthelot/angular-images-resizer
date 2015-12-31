@@ -9,7 +9,12 @@
   "main": [
     "angular-images-resizer.js"
   ],
-  "ignore": [],
+  "ignore": [
+    "exemple/",
+    "script",
+    "test",
+    "task"
+  ],
   "keywords": [
     "angular",
     "angularjs",

@@ -1,0 +1,6 @@
+<nav-bar-dir></nav-bar-dir>
+
+<md-content layout-padding>
+    <input name="uploadingImage" id="uploadingImage" ng-if="!isImageToModify" type="file"  onchange="angular.element(this).scope().uploadFile(this)" ng-model="uploadingImage" accept="image/*" capture>
+    <canvas ng-show="isImageToModify" id="canvas" ng-show="isImageToModify"></canvas>
+</md-content>

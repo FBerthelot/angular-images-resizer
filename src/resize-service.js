@@ -4,35 +4,45 @@
  */
 'use strict';
 
-angular.module('images-resizer')
-    .service('resizeService', ['$q', function($q) {
-
+/**
+ * @ngdoc service
+ * @name images-resizer.service:resizeService
+ * @description
+ * Main service which resize images and so on
+ */
+angular
+    .module('images-resizer')
+    .service('resizeService', ['$q', '$document', '$window', function ($q, $document, $window) {
         var mainCanvas;
-        var _this = this;
+        var service = this;
 
-        var isCanvasSupported = !!(document.createElement('canvas').getContext && document.createElement('canvas').getContext('2d'));
-
+        var isCanvasSupported = !!($document[0].createElement('canvas').getContext && $document[0].createElement('canvas').getContext('2d'));
 
         /**
-         * Creates a new image object from the src attributes
-         * @param src string src attribute of an img element
-         * @returns promise
+         * @ngdoc function
+         * @name #createImage
+         * @methodOf images-resizer.service:resizeService
+         * @description
+         * Creates a new image object according to a source
+         * @param {string} src Attribute of an img element
+         * @param {boolean} crossOrigin Add the possibility to import cross origin images
+         * @returns {Object} A promise with the image
          */
-        this.createImage = function (src, crossorigin) {
+        this.createImage = function (src, crossOrigin) {
             var deferred = $q.defer();
-            var img = new Image();
+            var img = new $window.Image();
 
-            if (crossorigin !== null) {
-                img.crossOrigin = crossorigin;
+            if (crossOrigin) {
+                img.crossOrigin = crossOrigin;
             }
 
-            img.onload = function() {
+            img.onload = function () {
                 deferred.resolve(img);
             };
-            img.onabort = function() {
-                deferred.reject('image was aborded');
+            img.onabort = function () {
+                deferred.reject('image creation was aborted');
             };
-            img.onerror = function(err) {
+            img.onerror = function (err) {
                 deferred.reject(err);
             };
 
@@ -41,10 +51,23 @@ angular.module('images-resizer')
             return deferred.promise;
         };
 
+        /**
+         * @ngdoc function
+         * @name #resizeCanvas
+         * @methodOf images-resizer.service:resizeService
+         * @description
+         * Resize a canvas according to the width and height
+         * @param {Object} cnv the canvas
+         * @param {number} width the final width to resize the canvas
+         * @param {number} height the final height to resize the canvas
+         * @returns {Object} return the resized canvas
+         */
         this.resizeCanvas = function (cnv, width, height) {
-            if(!width || !height) { return cnv; }
+            if (!width || !height) {
+                return cnv;
+            }
 
-            var tmpCanvas = document.createElement('canvas');
+            var tmpCanvas = $document[0].createElement('canvas');
             tmpCanvas.width = width;
             tmpCanvas.height = height;
             var cnx = tmpCanvas.getContext('2d');
@@ -53,47 +76,44 @@ angular.module('images-resizer')
         };
 
         /**
+         * @ngdoc function
+         * @name #resizeImage
+         * @methodOf images-resizer.service:resizeService
+         * @description
          * Resize an image with a given src attribute
-         * @param src string src attribute of an img element
-         * @param options json contain all options to resize an image (see all options available directly in th code below)
-         * @param cb function callback of the function
+         * @param {string} src string src attribute of an img element
+         * @param {object} options json contain all options to resize an image (see all options available directly in th code below)
+         * @return {promise} when the work is done it return the image or an error :)
          */
-        this.resizeImage = function(src, options, cb) {
-            //if no callback is specified or canvas is not supported
-            if(!isCanvasSupported) {
-                cb('Canvas is not supported on your browser', null);
-                return;
+        this.resizeImage = function (src, options) {
+            if (!isCanvasSupported) {
+                return $q.reject('Canvas is not supported on your browser');
             }
-            if(!cb || !options || !src) {
-                cb('Missing argument when calling resizeImage function', null);
-                return;
+            if (!options || !src) {
+                return $q.reject('Missing argument when calling resizeImage function');
             }
 
+            var deferred = $q.defer();
+
             options = {
-                height: options.height ? options.height : options.width ? null: options.size ? null: 1024,
-                width: options.width ? options.width : options.height ? null: options.size ? null: 1024,
+                height: options.height ? options.height : options.width ? null : options.size ? null : 1024,
+                width: options.width ? options.width : options.height ? null : options.size ? null : 1024,
                 size: options.size ? options.size : 500,
                 sizeScale: options.sizeScale ? options.sizeScale : 'ko',
                 step: options.step ? options.step : 3,
                 outputFormat: options.outputFormat ? options.outputFormat : 'image/jpeg',
-                crossorigin: options.crossorigin ? options.crossorigin : null
+                crossOrigin: options.crossOrigin ? options.crossOrigin : null
             };
 
-            _this.createImage(src, options.crossorigin).then(
-                function(img) {
+            service
+                .createImage(src, options.crossOrigin)
+                .then(function (img) {
                     if (options.height || options.width) {
-                        _this.createImage(src, options.crossorigin).then(
-                            function (img) {
-                                cb(null, _this.resizeImageWidthHeight(img, options.width, options.height , options.step, options.outputFormat));
-                            },
-                            function (err) {
-                                cb(err, null);
-                            }
-                        );
+                        deferred.resolve(service.resizeImageWidthHeight(img, options.width, options.height, options.step, options.outputFormat));
                     }
                     else if (options.size) {
                         //conversion of the size in bytes
-                        if (typeof options.sizeScale === 'string') {
+                        if (angular.isString(options.sizeScale)) {
                             switch (options.sizeScale.toLowerCase()) {
                                 case 'ko':
                                     options.size *= 1024;
@@ -106,50 +126,61 @@ angular.module('images-resizer')
                                     break;
                             }
                         }
-                        cb(null, _this.resizeImageBySize(img, options.size, options.outputFormat));
+                        deferred.resolve(service.resizeImageBySize(img, options.size, options.outputFormat));
                     }
-                },
-                function(err) {
-                    cb(err, null);
-                });
+                    else {
+                        deferred.reject('Missing option to resize the image');
+                    }
+                })
+                .catch(deferred.reject);
+
+            return deferred.promise;
         };
 
         /**
+         * @ngdoc function
+         * @name #resizeImageWidthHeight
+         * @methodOf images-resizer.service:resizeService
+         * @description
          * Resize image according to the width or the height or both
-         * @param image DomImage html image to resize
-         * @param width integer desired final image width
-         * @param height integer desired final image height
-         * @param step integer the number of step to finally have the image to the desired size
-         * @param outputFormat string the format of the output file for exemple image/jpeg, image/png,...
-         * @returns resized image
+         * @param {Object} image DomImage html image to resize
+         * @param {number} width desired final image width
+         * @param {number} height integer desired final image height
+         * @param {number} step integer the number of step to finally have the image to the desired size
+         * @param {string} outputFormat string the format of the output file for example image/jpeg, image/png,...
+         * @returns {string} resized image in base64
          */
-        this.resizeImageWidthHeight = function(image, width, height, step, outputFormat) {
-            if(!image) { return null; }
-            if(!outputFormat) { outputFormat = 'image/jpeg'; }
+        this.resizeImageWidthHeight = function (image, width, height, step, outputFormat) {
+            if (!image) {
+                return null;
+            }
+            if (!outputFormat) {
+                outputFormat = 'image/jpeg';
+            }
 
-            mainCanvas = document.createElement('canvas');
+            mainCanvas = $document[0].createElement('canvas');
 
             //Check what width and height the resized image must to be !
-            if(!width && ! height){
+            if (!width && !height) {
                 width = image.width;
                 height = image.height;
             }
-            else if(!width && height) {
+            else if (!width && height) {
                 width = (height / image.height) * image.width;
             }
-            else if(width && !height){
-                height = (width/ image.width) * image.height;
+            else if (width && !height) {
+                height = (width / image.width) * image.height;
             }
 
-            var pixelStepWidth = (image.width === width) || !step ? 0 : (image.width - width)/step;
-            var pixelStepHeight = (image.height === height) || !step ? 0 : (image.height - height)/step;
+            var pixelStepWidth = (image.width === width) || !step ? 0 : (image.width - width) / step;
+            var pixelStepHeight = (image.height === height) || !step ? 0 : (image.height - height) / step;
             mainCanvas.width = image.width;
             mainCanvas.height = image.height;
 
-            mainCanvas.getContext('2d').drawImage(image, 0, 0, mainCanvas.width , mainCanvas.height);
-            for(var i=1; i<step; i++){
+            mainCanvas.getContext('2d').drawImage(image, 0, 0, mainCanvas.width, mainCanvas.height);
+            for (var i = 1; i < step; i++) {
                 var newWidth = image.width - (pixelStepWidth * i);
-                var newHeight = image.height- (pixelStepHeight * i);
+                var newHeight = image.height - (pixelStepHeight * i);
                 mainCanvas = this.resizeCanvas(mainCanvas, newWidth, newHeight);
             }
             mainCanvas = this.resizeCanvas(mainCanvas, width, height);
@@ -158,17 +189,25 @@ angular.module('images-resizer')
         };
 
         /**
+         * @ngdoc function
+         * @name #resizeImageBySize
+         * @methodOf images-resizer.service:resizeService
+         * @description
          * Resize image to the approximately absolute size in octet
-         * @param image htmlImage the miage to resize
-         * @param size number the final size in octet
-         * @param outputFormat string the format of the output file for exemple image/jpeg, image/png,...
-         * @returns resize image in base64
+         * @param {Object} image htmlImage the miage to resize
+         * @param {number} size number the final size in octet
+         * @param {string} outputFormat string the format of the output file for example image/jpeg, image/png,...
+         * @returns {string} resize image in base64
          */
         this.resizeImageBySize = function (image, size, outputFormat) {
-            if(!image) { return null; }
-            if(!outputFormat) { outputFormat = 'image/jpeg'; }
+            if (!image) {
+                return null;
+            }
+            if (!outputFormat) {
+                outputFormat = 'image/jpeg';
+            }
 
-            mainCanvas = document.createElement('canvas');
+            mainCanvas = $document[0].createElement('canvas');
             mainCanvas.width = image.width;
             mainCanvas.height = image.height;
 
@@ -176,40 +215,44 @@ angular.module('images-resizer')
             var tmpResult = mainCanvas.toDataURL(outputFormat);
             var result = tmpResult;
 
-            var sizeOfTheImage =  _this.calulateImageSize(tmpResult, outputFormat);
-            var divideStrategy =  sizeOfTheImage / (size * 2) <= 1 ? 0.9 :  sizeOfTheImage / (size * 2.3);
+            var sizeOfTheImage = service.calulateImageSize(tmpResult, outputFormat);
+            var divideStrategy = sizeOfTheImage / (size * 2) <= 1 ? 0.9 : sizeOfTheImage / (size * 2.3);
 
             while (sizeOfTheImage > size) {
-                var canvas = document.createElement('canvas');
+                var canvas = $document[0].createElement('canvas');
                 canvas.width = mainCanvas.width / divideStrategy;
                 canvas.height = mainCanvas.height / divideStrategy;
 
                 canvas.getContext('2d').drawImage(mainCanvas, 0, 0, canvas.width, canvas.height);
                 tmpResult = mainCanvas.toDataURL(outputFormat);
-                var sizeOfTheImageTmp = _this.calulateImageSize(tmpResult, outputFormat);
+                var sizeOfTheImageTmp = service.calulateImageSize(tmpResult, outputFormat);
 
-                if(sizeOfTheImageTmp/size < 0.5) {
-                    divideStrategy =  sizeOfTheImage / (size * 2) <= 1 ? 0.9 :  sizeOfTheImage / (size * 2.3);
+                if (sizeOfTheImageTmp / size < 0.5) {
+                    divideStrategy = sizeOfTheImage / (size * 2) <= 1 ? 0.9 : sizeOfTheImage / (size * 2.3);
                 }
                 else {
                     mainCanvas = canvas;
                     result = tmpResult;
-                    sizeOfTheImage = _this.calulateImageSize(tmpResult, outputFormat);
+                    sizeOfTheImage = service.calulateImageSize(tmpResult, outputFormat);
                 }
 
-                mainCanvas =  canvas;
+                mainCanvas = canvas;
             }
             return result;
         };
 
         /**
+         * @ngdoc function
+         * @name #calulateImageSize
+         * @methodOf images-resizer.service:resizeService
+         * @description
          * Return the size of the img by given the base64 img strings.
-         * @param imgString String base64 image
-         * @param outputFormat string the format of the output file for exemple image/jpeg, image/png,...
-         * @returns number size of the img
+         * @param {string} imgString String base64 image
+         * @param {string} outputFormat string the format of the output file for example image/jpeg, image/png,...
+         * @returns {number} size of the img
          */
-        this.calulateImageSize = function(imgString, outputFormat) {
-            switch(outputFormat) {
+        this.calulateImageSize = function (imgString, outputFormat) {
+            switch (outputFormat) {
                 case 'image/jpeg':
                     outputFormat = 'image/jpg';
                     break;
@@ -217,7 +260,6 @@ angular.module('images-resizer')
                     outputFormat = 'image/jpg';
                     break;
             }
-            return Math.round((imgString.length - ('data:'+ outputFormat +';base64,').length)* 3/4);
+            return Math.round((imgString.length - ('data:' + outputFormat + ';base64,').length) * 3 / 4);
         };
-
     }]);

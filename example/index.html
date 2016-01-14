@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" ng-app="imageResizer">
+<head>
+    <title>Angular-image-resizer demonstration</title>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css" />
+    <link rel="stylesheet" href="src/assets/index.css">
+
+</head>
+<body layout="column" flex>
+    <!--[if lt IE 10]>
+      <p class="browsehappy">
+          You are using an <strong>outdated</strong> browser.
+          Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+
+    <section layout="row" flex>
+        <side-nav-dir></side-nav-dir>
+        <md-content role="main" layout-fill layout="column" flex ui-view></md-content>
+    </section>
+
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="node_modules/angular-aria/angular-aria.min.js"></script>
+    <script src="node_modules/angular-material/angular-material.min.js"></script>
+    <script src="angular-images-resizer.js"></script>
+
+    <script src="src/app/sidenav/sidenav.directive.js"></script>
+    <script src="src/app/resizeToolBox/resizeToolBox.controller.js"></script>
+    <script src="src/app/navbar/navbar.directive.js"></script>
+    <script src="src/app/index.js"></script>
+    <script src="src/app/main/main.controller.js"></script>
+</body>
+</html>

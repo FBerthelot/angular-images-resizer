@@ -1,37 +1,47 @@
 /**
  * Created by berthelot on 03/11/14.
  */
-/* globals FileError: false; */
 'use strict';
 
-angular.module('images-resizer')
-    .service('readLocalPicService', ['$q', function($q) {
+/**
+ * @ngdoc service
+ * @name images-resizer.service:readLocalPicService
+ * @description
+ * Service which read images from input file field.
+ */
+angular
+    .module('images-resizer')
+    .service('readLocalPicService', ['$q', '$window', function ($q, $window) {
 
         /**
+         * @ngdoc function
+         * @name #readFileInput
+         * @methodOf images-resizer.service:readLocalPicService
+         * @description
          * Read file input and convert it into base64 file
-         * @param input
-         * @returns {*}
+         * @param {Object} input JQlite or Jquery object to get the image loaded
+         * @returns {Promise} return a promise with the image.
          */
-        this.readFileInput = function(input) {
+        this.readFileInput = function (input) {
             var deferred = $q.defer();
 
             if (!input.files || !input.files[0]) {
                 deferred.reject('No file selected');
             }
             else {
-                if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
+                if (!($window.File && $window.FileReader && $window.FileList && $window.Blob)) {
                     deferred.reject('Your browser do not support reading file');
                 }
 
-                var reader = new FileReader();
+                var reader = new $window.FileReader();
                 reader.onload = function (e) {
                     deferred.resolve(e.target.result);
                 };
-                reader.onabort = function(e) {
-                    deferred.reject('Fail to convert file in base64img, aborded: '+ eventErrorDecoder(e));
+                reader.onabort = function (e) {
+                    deferred.reject('Fail to convert file in base64img, aborded: ' + eventErrorDecoder(e));
                 };
-                reader.onerror = function(e) {
-                    deferred.reject('Fail to convert file in base64img, error: '+ eventErrorDecoder(e));
+                reader.onerror = function (e) {
+                    deferred.reject('Fail to convert file in base64img, error: ' + eventErrorDecoder(e));
                 };
 
                 reader.readAsDataURL(input.files[0]);
@@ -48,7 +58,7 @@ angular.module('images-resizer')
         function eventErrorDecoder (event) {
             var errorMessage = null;
 
-            switch(event.target.error.code) {
+            switch (event.target.error.code) {
                 case FileError.NOT_FOUND_ERR:
                     errorMessage = 'NOT_FOUND_ERR';
                     break;

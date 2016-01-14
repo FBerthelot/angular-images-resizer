@@ -1,11 +1,24 @@
-git clone git@github.com:FBerthelot/angular-images-resizer.git
-cd angular-images-resizer
-git checkout gh-pages
-find . -mindepth 1 -delete ! -wholename './.git/*'
-cd ..
-cp -R exemple/* angular-images-resizer/
-cd angular-images-resizer
-npm install
-git add -A
-git commit -m 'See changelog from master branch'
-git push orgin gh-pages
+#!/bin/bash
+## Test this script localy
+## GH_TOKEN=<your password> GH_REF=github.com/FBerthelot/angular-images-resizer.git npm run deploy
+
+set -e # exit with nonzero exit code if anything fails
+
+# go to the out directory and create a *new* Git repo
+cd dist
+git init
+
+# inside this git repo we'll pretend to be a new user
+git config user.name "fbe-jgr-travis-ci"
+git config user.email "fbe-jgr-travis-ci@users.noreply.github.com"
+
+# The first and only commit to this new Git repo contains all the
+# files present with the commit message "Deploy to GitHub Pages".
+git add .
+git commit -m "Deploy to GitHub Pages"
+
+# Force push from the current repo's master branch to the remote
+# repo's gh-pages branch. (All previous history on the gh-pages branch
+# will be lost, since we are overwriting it.) We redirect any output to
+# /dev/null to hide any sensitive credential data that might otherwise be exposed.
+git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1

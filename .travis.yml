@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - '4.3'
+env:
+  global:
+    - GH_REF: github.com/FBerthelot/angular-images-resizer.git
+    - secure: bzIm9PG5Fra1CQkaveAlqclYiSyIqmapfnpO+JOYxk665XjgA7Jm1Eo3lREPzCHY2N2fWegLw3y3sxGnd4zQzOeNWQqKHWe5+ueMvHkgcvie5yYI7jS662UBerQS3lH0sohykH0oqVPtXSt2gjA8zoSph49iIMJmIEn7q6JD4Lya1NCDP5s8EeGRjMfTxooYfKr3A8RzVAuyCZHy3ggCVzHWIn7EI9HBR7u52G8fcQkycEDsuRGcskaR3kTFBn4qB55PpEUDa8q5MOV3uqA1XzY3+y0V9flw1kTU16zgX8ZiCbTWHnQr0OxAKs4eme09KjVGm1AxWe699zzLa2OWe7wLIAKqX+BLSJ6snTcodd1rAqRejMH4NeYqdSCQLASvW4QAB4nvbuehr1EhL/vDPNqd+cIX3xy8styUo32cXck7HqWWrH3FnLom3KjhuJIhENPlbWb8dHPIJvfdPb2KgGevUt4bhvyu9jwF2XVVYNuajhGycr2UoRegg1xJA/q+dAHmTvJ/Pu8m9XrrU5S9ndGA1CtkMVqQDasiD9rDesIuPVnqtm0cd0WhQOeger8Ke2A3dNpTd99aJwMb7iRnsU7H5PqHC1G+l7DyfCLMpZRJjld/+BrUpjiB0JAJCxkBb/0w7BabFqrZRF1xu+uQvmHVf3e6Iy+sN6adI8OZvxo=
+script:
+  - npm run build
+  - npm run buildDoc
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then npm run coveralls; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then npm run deploy; fi

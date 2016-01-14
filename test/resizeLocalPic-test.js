@@ -3,11 +3,12 @@
  */
 'use strict';
 
-describe('[images-resizer][resizeLocalPic-service]', function() {
-    var service, rootScope;
+describe('[images-resizer][resizeLocalPic-service]', function () {
+    var service;
+    var rootScope;
 
     beforeEach(module('images-resizer'));
-    beforeEach(inject(function($injector, $rootScope) {
+    beforeEach(inject(function ($injector, $rootScope) {
         service = $injector.get('readLocalPicService');
         rootScope = $rootScope;
     }));
@@ -16,9 +17,10 @@ describe('[images-resizer][resizeLocalPic-service]', function() {
         rootScope.$apply();
     });
 
-    describe('- readFileInput -', function() {
-        it('should return an encoded img', function() {
+    describe('- readFileInput -', function () {
+        it('should return an encoded img', function () {
             //If there is a way to simulate file selection i will take it !
+            expect(typeof service).to.equal('object');
         });
     });
 

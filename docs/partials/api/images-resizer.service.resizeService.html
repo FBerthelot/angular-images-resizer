@@ -1,0 +1,59 @@
+<h1><code ng:non-bindable="">resizeService</code>
+<div><span class="hint">service in module <code ng:non-bindable="">images-resizer</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="images-resizer-service-page images-resizer-service-resizeservice-page"><p>Main service which resize images and so on</p>
+</div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_calulateimagesize">calulateImageSize(imgString, outputFormat)</h3>
+<div class="calulateimagesize"><div class="-calulateimagesize-page"><p>Return the size of the img by given the base64 img strings.</p>
+</div><h5 id="methods_calulateimagesize_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>imgString</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="-calulateimagesize-page"><p>String base64 image</p>
+</div></td></tr><tr><td>outputFormat</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="-calulateimagesize-page"><p>string the format of the output file for example image/jpeg, image/png,...</p>
+</div></td></tr></tbody></table><h5 id="methods_calulateimagesize_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="-calulateimagesize-page"><p>size of the img</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_createimage">createImage(src, crossOrigin)</h3>
+<div class="createimage"><div class="-createimage-page"><p>Creates a new image object according to a source</p>
+</div><h5 id="methods_createimage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>src</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="-createimage-page"><p>Attribute of an img element</p>
+</div></td></tr><tr><td>crossOrigin</td><td><a href="" class="label type-hint type-hint-boolean">boolean</a></td><td><div class="-createimage-page"><p>Add the possibility to import cross origin images</p>
+</div></td></tr></tbody></table><h5 id="methods_createimage_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="-createimage-page"><p>A promise with the image</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_resizecanvas">resizeCanvas(cnv, width, height)</h3>
+<div class="resizecanvas"><div class="-resizecanvas-page"><p>Resize a canvas according to the width and height</p>
+</div><h5 id="methods_resizecanvas_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>cnv</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="-resizecanvas-page"><p>the canvas</p>
+</div></td></tr><tr><td>width</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="-resizecanvas-page"><p>the final width to resize the canvas</p>
+</div></td></tr><tr><td>height</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="-resizecanvas-page"><p>the final height to resize the canvas</p>
+</div></td></tr></tbody></table><h5 id="methods_resizecanvas_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="-resizecanvas-page"><p>return the resized canvas</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_resizeimage">resizeImage(src, options)</h3>
+<div class="resizeimage"><div class="-resizeimage-page"><p>Resize an image with a given src attribute</p>
+</div><h5 id="methods_resizeimage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>src</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="-resizeimage-page"><p>string src attribute of an img element</p>
+</div></td></tr><tr><td>options</td><td><a href="" class="label type-hint type-hint-object">object</a></td><td><div class="-resizeimage-page"><p>json contain all options to resize an image (see all options available directly in th code below)</p>
+</div></td></tr></tbody></table><h5 id="methods_resizeimage_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-promise">promise</a></td><td><div class="-resizeimage-page"><p>when the work is done it return the image or an error :)</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_resizeimagebysize">resizeImageBySize(image, size, outputFormat)</h3>
+<div class="resizeimagebysize"><div class="-resizeimagebysize-page"><p>Resize image to the approximately absolute size in octet</p>
+</div><h5 id="methods_resizeimagebysize_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>image</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="-resizeimagebysize-page"><p>htmlImage the miage to resize</p>
+</div></td></tr><tr><td>size</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="-resizeimagebysize-page"><p>number the final size in octet</p>
+</div></td></tr><tr><td>outputFormat</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="-resizeimagebysize-page"><p>string the format of the output file for example image/jpeg, image/png,...</p>
+</div></td></tr></tbody></table><h5 id="methods_resizeimagebysize_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="-resizeimagebysize-page"><p>resize image in base64</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_resizeimagewidthheight">resizeImageWidthHeight(image, width, height, step, outputFormat)</h3>
+<div class="resizeimagewidthheight"><div class="-resizeimagewidthheight-page"><p>Resize image according to the width or the height or both</p>
+</div><h5 id="methods_resizeimagewidthheight_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>image</td><td><a href="" class="label type-hint type-hint-object">Object</a></td><td><div class="-resizeimagewidthheight-page"><p>DomImage html image to resize</p>
+</div></td></tr><tr><td>width</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="-resizeimagewidthheight-page"><p>desired final image width</p>
+</div></td></tr><tr><td>height</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="-resizeimagewidthheight-page"><p>integer desired final image height</p>
+</div></td></tr><tr><td>step</td><td><a href="" class="label type-hint type-hint-number">number</a></td><td><div class="-resizeimagewidthheight-page"><p>integer the number of step to finally have the image to the desired size</p>
+</div></td></tr><tr><td>outputFormat</td><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="-resizeimagewidthheight-page"><p>string the format of the output file for example image/jpeg, image/png,...</p>
+</div></td></tr></tbody></table><h5 id="methods_resizeimagewidthheight_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">string</a></td><td><div class="-resizeimagewidthheight-page"><p>resized image in base64</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
+</div>

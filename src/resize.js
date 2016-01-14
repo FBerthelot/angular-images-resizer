@@ -3,4 +3,8 @@
  */
 'use strict';
 
+/**
+ * @ngdoc overview
+ * @name images-resizer
+ */
 angular.module('images-resizer', []);

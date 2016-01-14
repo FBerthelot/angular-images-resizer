@@ -116,4 +116,4 @@ proguard/
 
 #bower_components
 **/bower_components
-
+dist/

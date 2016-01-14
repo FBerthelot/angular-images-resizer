@@ -1,0 +1,15 @@
+{
+  "globals": {
+    "angular": true,
+    "module": true,
+    "inject": true,
+    "setTimeout": true,
+    "Image": true,
+    "expect": true
+  },
+  "env": {
+    "mocha": true,
+    "node": true,
+    "browser": true
+  }
+}

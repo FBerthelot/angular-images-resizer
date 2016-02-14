@@ -18,9 +18,13 @@ angular.module('images-resizer')
          * @param src string src attribute of an img element
          * @returns promise
          */
-        this.createImage = function (src) {
+        this.createImage = function (src, crossorigin) {
             var deferred = $q.defer();
             var img = new Image();
+
+            if (crossorigin !== null) {
+                img.crossOrigin = crossorigin;
+            }
 
             img.onload = function() {
                 deferred.resolve(img);
@@ -71,13 +75,14 @@ angular.module('images-resizer')
                 size: options.size ? options.size : 500,
                 sizeScale: options.sizeScale ? options.sizeScale : 'ko',
                 step: options.step ? options.step : 3,
-                outputFormat: options.outputFormat ? options.outputFormat : 'image/jpeg'
+                outputFormat: options.outputFormat ? options.outputFormat : 'image/jpeg',
+                crossorigin: options.crossorigin ? options.crossorigin : null
             };
 
-            _this.createImage(src).then(
+            _this.createImage(src, options.crossorigin).then(
                 function(img) {
                     if (options.height || options.width) {
-                        _this.createImage(src).then(
+                        _this.createImage(src, options.crossorigin).then(
                             function (img) {
                                 cb(null, _this.resizeImageWidthHeight(img, options.width, options.height , options.step, options.outputFormat));
                             },

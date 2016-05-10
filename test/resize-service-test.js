@@ -190,7 +190,7 @@ describe('[images-resizer][resize-service]', function () {
                 expect(data).to.be.not.null;
                 expect(data).to.contain('data:image/jpeg;base64');
                 //check the size of the returned image
-                expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(5000);
+                expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(6000);
                 done();
             };
 
@@ -254,7 +254,7 @@ describe('[images-resizer][resize-service]', function () {
                     expect(data).to.be.not.null;
                     expect(data).to.contain('data:image/jpeg;base64');
                     //check the size of the returned image
-                    expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(5000);
+                    expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(6000);
                     done();
                 })
                 .catch(function () { done('fail'); });
@@ -276,7 +276,7 @@ describe('[images-resizer][resize-service]', function () {
                     expect(data).to.be.not.null;
                     expect(data).to.contain('data:image/jpeg;base64');
                     //check the size of the returned image
-                    expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(5000);
+                    expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(6000);
                     done();
                 })
                 .catch(function () { done('fail'); });
@@ -297,7 +297,7 @@ describe('[images-resizer][resize-service]', function () {
                     expect(data).to.be.not.null;
                     expect(data).to.contain('data:image/jpeg;base64');
                     //check the size of the returned image
-                    expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(5000);
+                    expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(6000);
                     done();
                 })
                 .catch(function () { done('fail'); });
@@ -319,7 +319,7 @@ describe('[images-resizer][resize-service]', function () {
                     expect(data).to.be.not.null;
                     expect(data).to.contain('data:image/jpeg;base64');
                     //check the size of the returned image
-                    expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(5000);
+                    expect(Math.round(data.length - 'data:image/jpeg;base64,'.length) * 3 / 4).to.be.below(6000);
                     done();
                 })
                 .catch(function () { done('fail'); });
@@ -360,6 +360,10 @@ describe('[images-resizer][resize-service]', function () {
             setTimeout(function () {
                 $rootScope.$digest();
             }, 500);
+        });
+
+        it('should return 0 when the img is empty', function () {
+            expect(service.calulateImageSize('', 'image/png')).to.be.equal(0);
         });
     });
 });

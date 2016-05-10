@@ -199,7 +199,7 @@ angular
          * @param {string} outputFormat string the format of the output file for example image/jpeg, image/png,...
          * @returns {string} resize image in base64
          */
-        this.resizeImageBySize = function (image, size, outputFormat) {
+        this.resizeImageBySize = function (image, targetSize, outputFormat) {
             if (!image) {
                 return null;
             }
@@ -210,30 +210,39 @@ angular
             mainCanvas = $document[0].createElement('canvas');
             mainCanvas.width = image.width;
             mainCanvas.height = image.height;
-
             mainCanvas.getContext('2d').drawImage(image, 0, 0, mainCanvas.width, mainCanvas.height);
+
             var tmpResult = mainCanvas.toDataURL(outputFormat);
             var result = tmpResult;
 
             var sizeOfTheImage = service.calulateImageSize(tmpResult, outputFormat);
-            var divideStrategy = sizeOfTheImage / (size * 2) <= 1 ? 0.9 : sizeOfTheImage / (size * 2.3);
+            var divideStrategy = Math.max(1, Math.min(sizeOfTheImage / targetSize, 200));
 
-            while (sizeOfTheImage > size) {
-                var canvas = $document[0].createElement('canvas');
-                canvas.width = mainCanvas.width / divideStrategy;
-                canvas.height = mainCanvas.height / divideStrategy;
+            var iteratorLimit = 20;
+            while (sizeOfTheImage > targetSize && iteratorLimit !== 0) {
+                iteratorLimit--;
 
-                canvas.getContext('2d').drawImage(mainCanvas, 0, 0, canvas.width, canvas.height);
-                tmpResult = mainCanvas.toDataURL(outputFormat);
+                var newImageSize = {
+                    width: mainCanvas.width / divideStrategy,
+                    height: mainCanvas.height / divideStrategy
+                };
+                var canvas = this.resizeCanvas(mainCanvas, newImageSize.width, newImageSize.height);
+
+                tmpResult = canvas.toDataURL(outputFormat);
                 var sizeOfTheImageTmp = service.calulateImageSize(tmpResult, outputFormat);
 
-                if (sizeOfTheImageTmp / size < 0.5) {
-                    divideStrategy = sizeOfTheImage / (size * 2) <= 1 ? 0.9 : sizeOfTheImage / (size * 2.3);
+                // If result is too far away from target, restart dividing with less agressive strategy.
+                if (sizeOfTheImageTmp / targetSize < 0.5 || sizeOfTheImageTmp === 0) {
+                    divideStrategy = divideStrategy / 2;
+                    // If the divide strategy is below 1, it's mean, that we cannot resize anymore so we stop the loop
+                    if (divideStrategy < 1) {
+                        iteratorLimit = 0;
+                    }
                 }
-                else {
+                else { // next iteration will start with a new canvas
                     mainCanvas = canvas;
                     result = tmpResult;
-                    sizeOfTheImage = service.calulateImageSize(tmpResult, outputFormat);
+                    sizeOfTheImage = sizeOfTheImageTmp;
                 }
 
                 mainCanvas = canvas;
@@ -260,6 +269,6 @@ angular
                     outputFormat = 'image/jpg';
                     break;
             }
-            return Math.round((imgString.length - ('data:' + outputFormat + ';base64,').length) * 3 / 4);
+            return Math.max(0, Math.round((imgString.length - ('data:' + outputFormat + ';base64,').length) * 3 / 4));
         };
     }]);

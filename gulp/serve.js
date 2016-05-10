@@ -8,7 +8,12 @@ gulp.task('serve', ['build', 'ngdocs'], function () {
     browserSync.init({
         server: {
             baseDir: path.join(__dirname, '../'),
-            directory: true
+            directory: true,
+            routes: {
+                '/example/node_modules': path.join(__dirname, '../node_modules'),
+                '/example/angular-images-resizer.js': path.join(__dirname, '../angular-images-resizer.js'),
+                '/example/docs': path.join(__dirname, '../docs')
+            }
         }
     });
 

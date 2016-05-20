@@ -42,7 +42,7 @@
             $log.info('Start resizing image');
 
             resizeService
-                .resizeImage($scope.imageToModify.src, {width: width, height: height})
+                .resizeImage($scope.imageToModify.src, {width: width, height: height, outputFormat: 'image/png'})
                 .then(function (imgResized) {
                     $log.info('End resizing to width :', width, 'and height :', height);
                     $log.info('Resizing took', Date.now() - startTime, 'ms');
@@ -66,7 +66,7 @@
             $log.info('Start resizing image');
 
             resizeService
-                .resizeImage($scope.imageToModify.src, {sizeScale: sizeScale, size: size})
+                .resizeImage($scope.imageToModify.src, {sizeScale: sizeScale, size: size, outputFormat: 'image/png'})
                 .then(function (imgResized) {
                     $log.info('End resizing to less than', size + '' + sizeScale);
                     $log.info('Resizing took', Date.now() - startTime, 'ms');

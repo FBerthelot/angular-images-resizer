@@ -118,3 +118,5 @@ proguard/
 **/bower_components
 dist/
 .github.pem
+
+docs/

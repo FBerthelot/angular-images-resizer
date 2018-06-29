@@ -1,0 +1,14 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2" flex layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <md-toolbar>
+        <h1 class="md-toolbar-tools">Image Editor</h1>
+    </md-toolbar>
+    <md-button ng-click="close()" class="md-primary" hide-gt-md>Close menu</md-button>
+
+    <md-button class="md-primary" ng-if="resizeBtnDisabled" ng-click="clickOnButton('selectImage')" >Select an image</md-button>
+    <md-button class="md-warn" ng-if="!resizeBtnDisabled"  ng-click="clickOnButton('unselectImage')" >Reset Image</md-button>
+    <md-button ng-disabled="resizeBtnDisabled" ng-click="clickOnButton('resizeImgDimension')" >Dimension resize</md-button>
+    <md-button ng-disabled="resizeBtnDisabled" ng-click="clickOnButton('resizeImgOctet')" >Octet resize</md-button>
+
+    <md-button class="md-primary" href="docs/index.html">Go to the Documentation</md-button>
+</md-sidenav>
+

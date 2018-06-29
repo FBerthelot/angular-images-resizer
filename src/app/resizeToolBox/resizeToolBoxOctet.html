@@ -1,0 +1,23 @@
+<md-bottom-sheet>
+    <form name="resizeForm" layout="row" layout-align="center center">
+        <md-input-container class="mrgRight15 top10">
+            <label>Size</label>
+            <input type="number" step="any" name="size" ng-model="size" required>
+            <div ng-messages="resizeForm.size.$error">
+                <div ng-message="required">This is required.</div>
+            </div>
+        </md-input-container>
+
+        <md-input-container class="mrgRight15">
+            <label>Unit</label>
+            <md-select ng-model="unit">
+                <md-option ng-value="unit.value" ng-repeat="unit in units">{{ unit.label }}</md-option>
+            </md-select>
+            <div ng-messages="resizeForm.size.$error">
+                <div ng-message="required">This is required.</div>
+            </div>
+        </md-input-container>
+
+        <md-button ng-click="resize()" type="submit" class="md-raised md-primary">let's resize !</md-button>
+    </form>
+</md-bottom-sheet>

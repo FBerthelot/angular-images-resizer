@@ -4,8 +4,8 @@
 [![Coverage Status](https://img.shields.io/coveralls/FBerthelot/angular-images-resizer.svg)](https://coveralls.io/r/FBerthelot/angular-images-resizer)
 [![devDependency Status](https://david-dm.org/FBerthelot/angular-images-resizer/dev-status.svg)](https://david-dm.org/FBerthelot/angular-images-resizer#info=devDependencies)
 
-This is a simple angular service which resizes images client-side. With this component, you will liberate some resources on your server!
-Let your client work for you, and save bandwidth. If you don't care about supporting every browsers then this component is for you.
+This is a simple angular service which resizes images client-side. With this component, you'll liberate some resources on your server!
+Let your client work for you, and save bandwidth. If you do not care about supporting every browsers then this component is for you.
 
 You can test this module on this site example: http://fberthelot.github.io/angular-images-resizer/
 
